@@ -1,6 +1,6 @@
 export default function App() {
   return (
-    <div className="flex h-dvh flex-col items-center justify-center gap-5 bg-zinc-900 px-4">
+    <div className="font-primary flex h-dvh flex-col items-center justify-center gap-5 bg-zinc-900 px-4">
       <form className="w-[600px] rounded-2xl border border-zinc-700 bg-zinc-800 p-5 shadow-2xl">
         <header className="flex flex-col items-center">
           <img
@@ -26,7 +26,9 @@ export default function App() {
         />
 
         <div>
-          <h2 className="text-purple-500">Rafael Valverde</h2>
+          <h2 className="text-2xl font-medium text-purple-500">
+            Rafael Valverde
+          </h2>
         </div>
       </div>
     </div>
