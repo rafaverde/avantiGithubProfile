@@ -1,12 +1,38 @@
 import { BookMarked, Link, Search, UsersRound } from "lucide-react";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const searchFormSchema = z.object({
+  query: z
+    .string()
+    .min(1, { message: "Digite pelo menos um caracter para a busca." }),
+});
+
+type SearchFormInputs = z.infer<typeof searchFormSchema>;
 
 export default function App() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<SearchFormInputs>({
+    resolver: zodResolver(searchFormSchema),
+  });
+
+  async function handleSearchProfile(data: SearchFormInputs) {
+    console.log(data);
+  }
+
   return (
     <div className="font-primary bg-zinc-900 px-5">
       <div className="m-auto flex h-dvh max-w-[600px] flex-col items-center justify-center gap-5">
-        <form className="rounded-2xl border border-zinc-700 bg-zinc-800 p-6">
+        <form
+          className="rounded-2xl border border-zinc-700 bg-zinc-800 p-6"
+          onSubmit={handleSubmit(handleSearchProfile)}
+        >
           <header className="flex flex-col items-center">
             <img
               src="./src/assets/github-profile-logo.svg"
@@ -15,7 +41,7 @@ export default function App() {
             />
             <p className="mt-4 w-10/12 text-center text-zinc-400">
               Bem-vindo ao buscador de perfis no github. Digite o nome do
-              usuário e veja o perfil que deseja.
+              usuário e veja informações sobre o perfil do usuário.
             </p>
           </header>
 
@@ -25,18 +51,32 @@ export default function App() {
               type="text"
               placeholder="username"
               className="border-0 pl-0.5 text-white placeholder:text-zinc-500 focus:border-0 focus:outline-0 focus-visible:border-0 focus-visible:ring-0"
+              {...register("query")}
             />
             <Button
               type="submit"
               className="cursor-pointer bg-emerald-700 hover:bg-emerald-500"
+              disabled={isSubmitting}
             >
               <Search />
             </Button>
           </div>
+
+          <div className="mt-2">
+            {errors && (
+              // <small className="mt-2 text-red-600 opacity-0 transition-opacity">
+              <small
+                className={`text-red-600 ${errors.query?.message ? "opacity-100" : "opacity-0"} transition-opacity duration-500`}
+              >
+                {errors.query?.message}
+              </small>
+            )}
+          </div>
         </form>
+
         <div
           id="profile"
-          className="flex flex-col gap-6 rounded-2xl border border-zinc-700 bg-zinc-800 p-6 lg:flex-row"
+          className="flex flex-col gap-6 rounded-2xl border border-zinc-700 bg-zinc-800 p-6 md:flex-row"
         >
           <img
             src="https://www.github.com/rafaverde.png"
