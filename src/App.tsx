@@ -1,9 +1,13 @@
-import { BookMarked, Link, Search, UsersRound } from "lucide-react";
+import { Search } from "lucide-react";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { api } from "./lib/axios";
+import { useState } from "react";
+import { AxiosError } from "axios";
+import { ProfileBox } from "./components/profileBox";
 
 const searchFormSchema = z.object({
   query: z
@@ -13,17 +17,48 @@ const searchFormSchema = z.object({
 
 type SearchFormInputs = z.infer<typeof searchFormSchema>;
 
+export interface User {
+  avatarUrl: string;
+  name: string;
+  userUrl: string;
+  followers: number;
+  publicRepos: number;
+  bio?: string;
+}
+
 export default function App() {
+  const [userData, setUserData] = useState<User>();
+  const [hasError, setHasError] = useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    reset,
   } = useForm<SearchFormInputs>({
     resolver: zodResolver(searchFormSchema),
   });
 
-  async function handleSearchProfile(data: SearchFormInputs) {
-    console.log(data);
+  async function fetchUser(inputData: SearchFormInputs) {
+    try {
+      setHasError(false);
+      const { data } = await api.get(`users/${inputData.query}`);
+      const user: User = {
+        avatarUrl: data.avatar_url,
+        name: data.name,
+        userUrl: data.html_url,
+        followers: data.followers,
+        publicRepos: data.public_repos,
+        bio: data.bio,
+      };
+      setUserData(user);
+
+      reset();
+    } catch (error) {
+      if (error instanceof AxiosError && error.status === 404) {
+        setHasError(true);
+      }
+    }
   }
 
   return (
@@ -31,7 +66,7 @@ export default function App() {
       <div className="m-auto flex h-dvh max-w-[600px] flex-col items-center justify-center gap-5">
         <form
           className="rounded-2xl border border-zinc-700 bg-zinc-800 p-6"
-          onSubmit={handleSubmit(handleSearchProfile)}
+          onSubmit={handleSubmit(fetchUser)}
         >
           <header className="flex flex-col items-center">
             <img
@@ -64,7 +99,6 @@ export default function App() {
 
           <div className="mt-2">
             {errors && (
-              // <small className="mt-2 text-red-600 opacity-0 transition-opacity">
               <small
                 className={`text-red-600 ${errors.query?.message ? "opacity-100" : "opacity-0"} transition-opacity duration-500`}
               >
@@ -74,52 +108,11 @@ export default function App() {
           </div>
         </form>
 
-        <div
-          id="profile"
-          className="flex flex-col gap-6 rounded-2xl border border-zinc-700 bg-zinc-800 p-6 md:flex-row"
-        >
-          <img
-            src="https://www.github.com/rafaverde.png"
-            alt="Profile Avatar"
-            className="block h-20 w-20 rounded-full border-4 border-emerald-700"
-            width={80}
-            height={80}
-          />
-
-          <div>
-            <div className="mb-2 flex items-center justify-between">
-              <h2 className="m-0 text-2xl leading-0 font-medium text-emerald-500">
-                Rafael Valverde
-              </h2>
-              <a href="" target="_blank">
-                <Link className="m-0 text-sm text-zinc-400" size={20} />
-              </a>
-            </div>
-
-            <div className="mb-3 flex gap-6">
-              <a href="" target="_blank">
-                <div className="flex items-center gap-2">
-                  <UsersRound size={18} className="text-emerald-600" />
-                  <span className="text-sm text-zinc-500">4 followers</span>
-                </div>
-              </a>
-
-              <a href="" target="_blank">
-                <div className="flex items-center gap-2">
-                  <BookMarked size={18} className="text-emerald-600" />
-                  <span className="text-sm text-zinc-500">36 repos</span>
-                </div>
-              </a>
-            </div>
-
-            <p className="line text-sm leading-6 text-zinc-400">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Repellendus officia quidem itaque similique dolor cumque eius
-              necessitatibus alias temporibus aliquid! Expedita ipsam ipsum non,
-              architecto inventore totam. Id, praesentium ad.
-            </p>
-          </div>
-        </div>
+        <ProfileBox
+          user={userData}
+          hasError={hasError}
+          loadingData={isSubmitting}
+        />
       </div>
     </div>
   );
