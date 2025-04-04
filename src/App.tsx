@@ -70,7 +70,7 @@ export default function App() {
         >
           <header className="flex flex-col items-center">
             <img
-              src="./src/assets/github-profile-logo.svg"
+              src="/src/assets/github-profile-logo.svg"
               alt="Github Profile App Logo"
               width={250}
             />
