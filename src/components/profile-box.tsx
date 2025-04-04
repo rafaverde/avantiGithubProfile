@@ -83,7 +83,7 @@ export function ProfileBox({ user, hasError, loadingData }: ProfileBoxProps) {
             </div>
 
             <div className="mb-3 flex gap-6">
-              <a href="" target="_blank">
+              <a href={`${user.userUrl}/?tab=followers`} target="_blank">
                 <div className="flex items-center gap-2">
                   <UsersRound size={18} className="text-emerald-600" />
                   <span className="text-sm text-zinc-500">
@@ -92,7 +92,7 @@ export function ProfileBox({ user, hasError, loadingData }: ProfileBoxProps) {
                 </div>
               </a>
 
-              <a href="" target="_blank">
+              <a href={`${user.userUrl}/?tab=repositories`} target="_blank">
                 <div className="flex items-center gap-2">
                   <BookMarked size={18} className="text-emerald-600" />
                   <span className="text-sm text-zinc-500">
