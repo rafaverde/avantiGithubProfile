@@ -1,13 +1,16 @@
 import { LoaderIcon, Search } from "lucide-react";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
+import { ProfileBox } from "./components/profile-box";
+import logoGithubProfiler from "./assets/github-profile-logo.png";
+
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { api } from "./lib/axios";
+
 import { useState } from "react";
+import { api } from "./lib/axios";
 import { AxiosError } from "axios";
-import { ProfileBox } from "./components/profile-box";
 
 const searchFormSchema = z.object({
   query: z
@@ -70,7 +73,7 @@ export default function App() {
         >
           <header className="flex flex-col items-center">
             <img
-              src="/src/assets/github-profile-logo.png"
+              src={logoGithubProfiler}
               alt="Github Profile App Logo"
               width={250}
             />
