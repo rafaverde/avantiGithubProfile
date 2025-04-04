@@ -1,54 +1,40 @@
-# React + TypeScript + Vite
+# Teste Técnico Avanti Innovation Class
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Busca de perfil no Github
 
-Currently, two official plugins are available:
+Projeto realizado em teste técnico para vaga de estágio na Avanti Digital Commerce Expert, no programa Avanti Innovation Class, criando um buscador de perfil do Github que busca na API e exibe informações do usuário.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Screenshots
 
-## Expanding the ESLint configuration
+![Site Screenshot](./.github/preview.webp)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Resultado
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Você pode acessar o resultado clicando [aqui](https://avantigithubprofile.netlify.app/).
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Requisitos atendidos
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Desenvolver uma aplicação React que permite buscar perfis do GitHub e exibir informações do usuário conforme o layout do Figma abaixo. [Layout proposto](https://www.figma.com/proto/DqtFxC6312M32mLt8FpJjq/inovation-class?page-id=22%3A2864&node-id=22-4293&viewport=359%2C115%2C0.25&t=SHsEqEgaMrXGMKwv-1&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=22%3A4293&show-proto-sidebar=1)
+- Criar um campo de busca, onde o usuário digita o nome de um perfil do GitHub.
+- Ao clicar no botão de busca, a aplicação deve consumir a API do GitHub e exibir as seguintes informações do usuário.
+- Exibir mensagens de erro caso o perfil não seja encontrado
+- Estilizar o layout seguindo o design do Figma. O candidato pode utilizar um framework CSS como Bootstrap, Tailwind ou outro.
+- Melhorar a experiência do usuário com efeitos visuais e loading durante a requisição.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## Stack utilizada
+
+**Front-end:** React.js • TailwindCSS
+
+**Libs** React Hook Form, Zod, shadcn/ui, axios
+
+## Autores
+
+- [@rafaverde](https://www.github.com/rafaverde)
+
+## Feedback
+
+Se você tiver algum feedback, por favor me mande um [email](mailto:rafaverde@msn.com).
+
+## Licença
+
+[MIT](https://choosealicense.com/licenses/mit/)
