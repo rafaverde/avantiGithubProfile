@@ -1,4 +1,4 @@
-import { Search } from "lucide-react";
+import { LoaderIcon, Search } from "lucide-react";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
 import { z } from "zod";
@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "./lib/axios";
 import { useState } from "react";
 import { AxiosError } from "axios";
-import { ProfileBox } from "./components/profileBox";
+import { ProfileBox } from "./components/profile-box";
 
 const searchFormSchema = z.object({
   query: z
@@ -90,10 +90,14 @@ export default function App() {
             />
             <Button
               type="submit"
-              className="cursor-pointer bg-emerald-700 hover:bg-emerald-500"
+              className="cursor-pointer bg-emerald-700 transition-all duration-400 hover:scale-105 hover:bg-emerald-500"
               disabled={isSubmitting}
             >
-              <Search />
+              {isSubmitting ? (
+                <LoaderIcon className="animate-spin duration-200" />
+              ) : (
+                <Search />
+              )}
             </Button>
           </div>
 
